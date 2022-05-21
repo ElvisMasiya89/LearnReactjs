@@ -1,9 +1,12 @@
 import React  from 'react'
 
-const person = () =>{
-
+const person = (props) =>{
+    //When using class-based components, its this.props
     return(
-        <p>l'm a Person!</p>
+      <div>
+        <p>l'm a {props.name} and l am {props.age} years old !</p>
+        <p>{props.children}</p>  
+    </div>  
     )
 
 };
