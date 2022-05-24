@@ -9,6 +9,7 @@ const App = (props)=>{
 
   //Using array distructuring
   const [personsState, setPersonState] =  useState({
+    //useState hook function returns an array with 2 items an state object and a function to modify state
     persons:[
             {name:'Max', age:28},
             {name:'Manu', age:29},
