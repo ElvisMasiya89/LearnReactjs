@@ -15,15 +15,20 @@ const App = (props)=>{
             {name:'Manu', age:29},
             {name:'Stephanie', age:26},
           ],
-
-    otherState:'some other value' 
-
     })
+
+    const [otherState, setOtherState] =  useState({
+      //useState hook function returns an array with 2 items an state object and a function to modify state
+      otherState:'some other value' 
+  
+      })
 
   //In JavaScript you can declare functions with other functions  
   const switchNameHadler = ()=>{
           console.log('Was Clicked')
-          //DO NO DO THIS personsState.persons[0].name = 'Princess'
+          //setPersonState does not merge the old state with the new 
+          //state as in class based componets instead it replace the old state,
+          //To manage different states,  use multiple setStates
             setPersonState( {persons: [
               {name:'Wakanda', age:28},
               {name:'Manu', age:29},
