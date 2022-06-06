@@ -5,78 +5,163 @@ import Person from './Person/Person'
 
 class App extends Component{
 
-    state = {
-      persons:[
-        {name:'Max', age:28},
-        {name:'Manu', age:29},
-        {name:'Stephanie', age:26},
-      ],
-  
-    otherState:'some other value' 
-    }
-  
-  
-    switchNameHadler = (newName)=>{
-      console.log('Was Clicked')
-      //DO NO DO THIS personsState.persons[0].name = 'Princess'
-        this.setState( {persons: [
-          {name:newName, age:28},
-          {name:'Manu', age:29},
-          {name:'Danzel', age:26},]
-        } )
-    }
+  state = {
+    persons:[
+      {name:'Max', age:28},
+      {name:'Manu', age:29},
+      {name:'Stephanie', age:26},
+    ],
 
-      nameChangedHandler = (event)=>{
-      this.setState({persons: [
-        {name:"Wakanda", age:28},
-        {name:event.target.value, age:29},
-        {name:'Danzel', age:26},]
-      })
-    };    
-  
-    render(){
-
-       //Inline CSS
-       const  style={
-          backgroudColor:'white',
-          font :'inherit',
-          border: '1px solid blue',
-          padding:'8px',
-          cursor:'pointer'
-       };
-
-      return(   
-        <div className='App'>
-          <h1>Hi,I'm a React App!!</h1> 
-          <p>This is going really well!</p>
-          <button 
-              style={style} 
-              onClick={()=>this.switchNameHadler('Wakanda')}> Switch Name</button>
-          <Person name={this.state.persons[0].name}  age={this.state.persons[0].age}/>
-          <Person
-           name={this.state.persons[1].name}
-           age={this.state.persons[1].age}
-           click={this.switchNameHadler.bind(this,'Wakanda')}
-           changed = {this.nameChangedHandler}>My Hobbies: Racing
-           </Person>
-          <Person  name = {this.state.persons[2].name} age = {this.state.persons[2].age}/>
-      </div> 
-        );
-    }
-
-
-
-
-
-
-
-
-  
-      //This code gets compiled down to this code
-    //  return (React.createElement('div', {className :"App"}, React.createElement('h1',null,'Hi, I\'m a Vcard App!!')));
+  otherState:'some other value',
+  showPersons:false,
   }
-  export default App;
+
+
+  switchNameHadler = (newName)=>{
+    console.log('Was Clicked')
+    //DO NO DO THIS personsState.persons[0].name = 'Princess'
+      this.setState( {persons: [
+        {name:newName, age:28},
+        {name:'Manu', age:29},
+        {name:'Danzel', age:26},]
+      } )
+  }
+
+    nameChangedHandler = (event)=>{
+    this.setState({persons: [
+      {name:"Wakanda", age:28},
+      {name:event.target.value, age:29},
+      {name:'Danzel', age:26},]
+    })
+  };    
+
+
+//This method declaration "function_name = ()=>{}" ensurs the 'this' key word always refer to this class
+//
+
+  togglePersonHandler=()=>{
+     const doesShow = this.state.showPersons;
+     this.setState({showPersons: !doesShow});
+  };
+
+  render(){
+
+     //Inline CSS
+     const  style={
+        backgroudColor:'white',
+        font :'inherit',
+        border: '1px solid blue',
+        padding:'8px',
+        cursor:'pointer'
+     };
+
+    return(   
+      <div className='App'>
+        <h1>Hi,I'm a React App!!</h1> 
+        <p>This is going really well!</p>
+        <button 
+            style={style} 
+            onClick={this.togglePersonHandler}> Toogle Persons</button>
+       {this.state.showPersons === true ? 
+          <div>
+                <Person name={this.state.persons[0].name}  age={this.state.persons[0].age}/>
+                <Person
+                name={this.state.persons[1].name}
+                age={this.state.persons[1].age}
+                click={this.switchNameHadler.bind(this,'Wakanda')}
+                changed = {this.nameChangedHandler}>My Hobbies: Racing
+                </Person>
+                <Person  name = {this.state.persons[2].name} age = {this.state.persons[2].age}/>  
+          </div> :  null}    
+    </div>);
+  }  
+}
+export default App;
+ 
+
+
+
+
+//Using Class component 
+// class App extends Component{
+
+//     state = {
+//       persons:[
+//         {name:'Max', age:28},
+//         {name:'Manu', age:29},
+//         {name:'Stephanie', age:26},
+//       ],
+  
+//     otherState:'some other value' 
+//     }
+  
+  
+//     switchNameHadler = (newName)=>{
+//       console.log('Was Clicked')
+//       //DO NO DO THIS personsState.persons[0].name = 'Princess'
+//         this.setState( {persons: [
+//           {name:newName, age:28},
+//           {name:'Manu', age:29},
+//           {name:'Danzel', age:26},]
+//         } )
+//     }
+
+//       nameChangedHandler = (event)=>{
+//       this.setState({persons: [
+//         {name:"Wakanda", age:28},
+//         {name:event.target.value, age:29},
+//         {name:'Danzel', age:26},]
+//       })
+//     };    
+  
+//     render(){
+
+//        //Inline CSS
+//        const  style={
+//           backgroudColor:'white',
+//           font :'inherit',
+//           border: '1px solid blue',
+//           padding:'8px',
+//           cursor:'pointer'
+//        };
+
+//       return(   
+//         <div className='App'>
+//           <h1>Hi,I'm a React App!!</h1> 
+//           <p>This is going really well!</p>
+//           <button 
+//               style={style} 
+//               onClick={()=>this.switchNameHadler('Wakanda')}> Switch Name</button>
+//           <Person name={this.state.persons[0].name}  age={this.state.persons[0].age}/>
+//           <Person
+//            name={this.state.persons[1].name}
+//            age={this.state.persons[1].age}
+//            click={this.switchNameHadler.bind(this,'Wakanda')}
+//            changed = {this.nameChangedHandler}>My Hobbies: Racing
+//            </Person>
+//           <Person  name = {this.state.persons[2].name} age = {this.state.persons[2].age}/>
+//       </div> 
+//         );
+//     }
+  
+//       //This code gets compiled down to this code
+//     //  return (React.createElement('div', {className :"App"}, React.createElement('h1',null,'Hi, I\'m a Vcard App!!')));
+//   }
+//   export default App;
    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // //React with Hooks
 // const App = (props)=>{
