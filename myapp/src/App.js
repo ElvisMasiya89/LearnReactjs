@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 // import React,{useState} from 'react' // import hook function that start with 'use' key word
-import './App.css'; 
+import styles from './App.module.css'; 
 import Person from './Person/Person'
 
 class App extends Component{
@@ -81,6 +81,8 @@ class App extends Component{
               })}  
           </div>
         );
+
+        style.backgroundColor = 'red'
      }
 
       // let classes = ['red', 'bold'].join(' ');
@@ -88,17 +90,17 @@ class App extends Component{
       let classes = []
 
       if(this.state.persons.length <=2){
-        classes.push('red');
+        classes.push(styles.red);
       }
 
       if(this.state.persons.length <=1){
-        classes.push('bold');
+        classes.push(styles.bold);
       }
 
       //let joinedClasses = classes.join(' ')
 
     return(   
-          <div className='App'>
+          <div className={styles.App}>
             <h1>Hi,I'm a React App!!</h1> 
             <p className={ classes.join(' ')}>This is going really well!</p>
             <button 
