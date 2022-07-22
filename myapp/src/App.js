@@ -1,7 +1,8 @@
 import React,{Component} from 'react'
 // import React,{useState} from 'react' // import hook function that start with 'use' key word
 import styles from './App.module.css'; 
-import Person from './Person/Person'
+import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component{
 
@@ -55,34 +56,26 @@ class App extends Component{
   };
 
   render(){
-
-     //Inline CSS
-     const  style = {
-        backgroundColor: 'green',
-        color : 'white',
-        font :'inherit',
-        border: '1px solid blue',
-        padding:'8px',
-        cursor:'pointer'
-     };
-
      let persons = null;
+     let btnClass = '';
      
      if(this.state.showPersons===true){
        persons = (  
           <div>
               {this.state.persons.map((person, index)=>{
-                return<Person
+                return<ErrorBoundary   key = {person.id}>
+                <Person
                     click={() => this.deletePersonHandler(index)}
                     name = {person.name}
                     age = {person.age} 
-                    key = {person.id}
                     changed = {(event) => this.nameChangedHandler(event, person.id)}/>
+                </ErrorBoundary>
               })}  
           </div>
         );
 
-        style.backgroundColor = 'red'
+        btnClass = styles.Red;
+      
      }
 
       // let classes = ['red', 'bold'].join(' ');
@@ -104,7 +97,7 @@ class App extends Component{
             <h1>Hi,I'm a React App!!</h1> 
             <p className={ classes.join(' ')}>This is going really well!</p>
             <button 
-                style={style} 
+                className={btnClass}
                 onClick={this.togglePersonHandler}> Toogle Persons</button>
           {persons}
         </div>);
