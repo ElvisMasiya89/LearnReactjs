@@ -1,10 +1,16 @@
 import React,{Component} from 'react'
 // import React,{useState} from 'react' // import hook function that start with 'use' key word
 import styles from './App.module.css'; 
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Persons from '../componets/Persons/Persons';
+import Cockpit from '../componets/Cockpit/Cockpit';
+
 
 class App extends Component{
+   
+   constructor(props){
+    super(props)
+    console.log('[App.js] constructor')
+   }
 
   state = {
     persons:[
@@ -15,7 +21,21 @@ class App extends Component{
 
   otherState:'some other value',
   showPersons:false,
+  showCockpit:true
   };
+
+  static getDerivedStateFromProps(props, state){
+    console.log('[App.js]  getDerivedStateFromProps', props);
+    return state;
+  }
+
+  componentDidMount(){
+    console.log('[App.js] componentDidMount');
+  }
+
+  componentWillUnmount(){
+    console.log('[App.js]  componentWillUnmount');
+  }
 
 
 
@@ -27,10 +47,8 @@ class App extends Component{
     //const person = Object.assign({}, this.state.persons[personIndex] )
     const person = {...this.state.persons[personIndex]};
     person.name = event.target.value;
-
     const persons = [...this.state.persons];
     persons[personIndex] = person;
-
     this.setState({persons: persons});   
   
   };
@@ -38,7 +56,6 @@ class App extends Component{
   
   deletePersonHandler = (personIndex) => {
     //const persons = this.state.persons.slice();//Slice without arguements simply returns a new array.
-
     //or use the spread operator
     const persons= [...this.state.persons]
     persons.splice(personIndex, 1);
@@ -56,49 +73,32 @@ class App extends Component{
   };
 
   render(){
+     console.log('[App.js] render');
+
      let persons = null;
-     let btnClass = '';
-     
      if(this.state.showPersons===true){
        persons = (  
-          <div>
-              {this.state.persons.map((person, index)=>{
-                return<ErrorBoundary   key = {person.id}>
-                <Person
-                    click={() => this.deletePersonHandler(index)}
-                    name = {person.name}
-                    age = {person.age} 
-                    changed = {(event) => this.nameChangedHandler(event, person.id)}/>
-                </ErrorBoundary>
-              })}  
-          </div>
+             <Persons
+                     persons = {this.state.persons}
+                     clicked = {this.deletePersonHandler}
+                     changed = {this.nameChangedHandler}             
+                 />
         );
-
-        btnClass = styles.Red;
-      
      }
 
-      // let classes = ['red', 'bold'].join(' ');
-
-      let classes = []
-
-      if(this.state.persons.length <=2){
-        classes.push(styles.red);
-      }
-
-      if(this.state.persons.length <=1){
-        classes.push(styles.bold);
-      }
-
-      //let joinedClasses = classes.join(' ')
 
     return(   
+         
           <div className={styles.App}>
-            <h1>Hi,I'm a React App!!</h1> 
-            <p className={ classes.join(' ')}>This is going really well!</p>
-            <button 
-                className={btnClass}
-                onClick={this.togglePersonHandler}> Toogle Persons</button>
+          <button onClick={()=>{
+            this.setState({showCockpit: false});
+            }}>
+            Remove Cockpit 
+          </button>
+          {this.state.showCockpit ? <Cockpit
+             showPersons={this.state.showPersons} 
+             personsLength = {this.state.persons.length}
+             clicked={this.togglePersonHandler}/> : null}
           {persons}
         </div>);
   }  
