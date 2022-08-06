@@ -2,6 +2,7 @@ import React, {Component}  from 'react';
 import styles from './Person.module.css';
 
 
+
 class  Person  extends Component{
   render(){
   console.log('[Persons.js] rendering...') 
