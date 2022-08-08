@@ -1,14 +1,20 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import styles from './Cockpit.module.css'; 
 
  const Cockpit = props =>{
 
+   const toogleBtnRef = useRef(null); 
+
+
+
     useEffect(()=>{
         console.log('[Cockpit.js] useEffect');
         //Fake http request
-         setTimeout(()=>{
-            alert('Saved data to clound!');
-         }, 1000);
+        //  setTimeout(()=>{
+        //     alert('Saved data to clound!');
+        //  }, 1000);
+
+        toogleBtnRef.current.click()
          
          return ()=>{
           console.log('[Cockpit.js] cleanup work in   useEffect')
@@ -47,7 +53,8 @@ import styles from './Cockpit.module.css';
             <p className={ classes.join(' ')}>This is going really well!</p>
             <button 
                 className={btnClass}
-                onClick={props.clicked}> Toogle Persons</button>
+                onClick={props.clicked}
+                ref={toogleBtnRef}> Toogle Persons</button>
         </div>  
     );
  };
