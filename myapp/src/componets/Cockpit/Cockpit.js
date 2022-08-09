@@ -1,9 +1,13 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useContext} from "react";
 import styles from './Cockpit.module.css'; 
+import AuthContext from "../../context/auth-context";
 
  const Cockpit = props =>{
 
    const toogleBtnRef = useRef(null); 
+   const authContext = useContext(AuthContext);
+   
+   console.log(authContext.authenticated);
 
 
 
@@ -47,6 +51,10 @@ import styles from './Cockpit.module.css';
       classes.push(styles.bold);
     }
 
+
+    // <AuthContext.Consumer>
+    //              {(context)=><button onClick={context.login}>Log in</button>   }   
+    // </AuthContext.Consumer>    
     return(
         <div className={styles.Cockpit}>
             <h1>Hi,I'm a React App!!</h1> 
@@ -55,6 +63,7 @@ import styles from './Cockpit.module.css';
                 className={btnClass}
                 onClick={props.clicked}
                 ref={toogleBtnRef}> Toogle Persons</button>
+                {<button onClick={authContext.login}>Log in</button>   }    
         </div>  
     );
  };

@@ -5,6 +5,7 @@ import styles from './App.module.css';
 import Persons from '../componets/Persons/Persons';
 import Cockpit from '../componets/Cockpit/Cockpit';
 import WithClass from '../hoc/WithClass';
+import AuthContext from '../context/auth-context';
 
 
 class App extends Component{
@@ -24,7 +25,8 @@ class App extends Component{
   otherState:'some other value',
   showPersons:false,
   showCockpit:true,
-  changeCounter:0
+  changeCounter:0,
+  aunthenticated: true
   };
 
   static getDerivedStateFromProps(props, state){
@@ -81,6 +83,10 @@ class App extends Component{
      this.setState({showPersons: !doesShow});
   };
 
+  loginHandler=()=>{
+    this.setState({aunthenticated:true}); 
+  }
+
   render(){
      console.log('[App.js] render');
 
@@ -104,11 +110,23 @@ class App extends Component{
             }}>
             Remove Cockpit 
           </button>
-          {this.state.showCockpit ? <Cockpit
+          <AuthContext.Provider
+            // value={{aunthenticated:true,
+            // login: this.loginHandler
+            // }}
+
+            value={this.state.aunthenticated}
+            
+            >
+
+          {this.state.showCockpit ? (
+            <Cockpit
              showPersons={this.state.showPersons} 
              personsLength = {this.state.persons.length}
-             clicked={this.togglePersonHandler}/> : null}
+             clicked={this.togglePersonHandler}
+             login ={this.loginHandler} />) : null}
           {persons}
+          </AuthContext.Provider>
         </WithClass>);
   }  
 }

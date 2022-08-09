@@ -1,6 +1,8 @@
 import React, {Component}  from 'react';
 import PropTypes from 'prop-types'
 import styles from './Person.module.css';
+import AuthContext from '../../../context/auth-context';
+
 
 
 
@@ -12,15 +14,27 @@ class  Person  extends Component{
 
    }
 
+
+  static contextType = AuthContext;
+
   componentDidMount(){
    // this.inputElement.focus();
     this.inputElementRef.current.focus()
+    //console.log(this.context.authenticated)
   }
   render(){
   console.log('[Persons.js] rendering...') 
     //When using class-based components, its this.props
+    // {this.context.authenticated ? <p>Authenticated!</p> : <p>Please Log in</p>}
+    // <AuthContext.Consumer>
+    // { (context)=>context.authenticated ? <p>Authenticated</p> : <p>Please Log in</p> }
+    // </AuthContext.Consumer>
     return(
       <div className = {styles.Person}>
+      
+       {this.context ? <p>Authenticated!</p> : <p>Please Log in</p>}
+       {console.log("Context Object", this.context)}
+
         <p onClick={this.props.click}>l'm  {this.props.name} and l am {this.props.age} years old !</p>
         <p>{this.props.children}</p>  
         <input 
